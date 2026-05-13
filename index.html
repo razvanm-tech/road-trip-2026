@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Road Trip Portugalia · Iunie 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FAF7F2;
+    --terracotta: #C4603A;
+    --terracotta-light: #E8896A;
+    --terracotta-pale: #F5E4DC;
+    --olive: #5C6B3A;
+    --olive-light: #8A9B6A;
+    --olive-pale: #E8EDD8;
+    --navy: #1E2D4A;
+    --navy-mid: #2E4470;
+    --gold: #B8860B;
+    --gold-pale: #F5EDD0;
+    --stone: #8A7D6A;
+    --stone-light: #C4B8A8;
+    --stone-pale: #EDE8E0;
+    --text: #1A1410;
+    --text-mid: #4A3F35;
+    --text-muted: #8A7D6A;
+    --border: rgba(139, 125, 106, 0.2);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    padding: 3rem 1.5rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(196, 96, 58, 0.12);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(92, 107, 58, 0.1);
+  }
+
+  .hero-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terracotta-light);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: 600;
+    color: var(--warm-white);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--terracotta-light);
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(250, 247, 242, 0.55);
+    margin-top: 1rem;
+    font-weight: 300;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .stat { }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--warm-white);
+    font-weight: 600;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: rgba(250,247,242,0.45);
+    font-weight: 300;
+    margin-top: 1px;
+  }
+
+  /* RESERVATIONS BANNER */
+  .banner {
+    background: var(--terracotta-pale);
+    border-left: 3px solid var(--terracotta);
+    margin: 1.25rem 1rem;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+  }
+
+  .banner-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 0.6rem;
+  }
+
+  .banner-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .banner-item {
+    font-size: 12px;
+    background: white;
+    border: 1px solid rgba(196,96,58,0.2);
+    border-radius: 20px;
+    padding: 4px 10px;
+    color: var(--text-mid);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .banner-item::before {
+    content: '⚑';
+    font-size: 10px;
+    color: var(--terracotta);
+  }
+
+  /* DAYS */
+  .days { padding: 0 1rem 3rem; max-width: 640px; margin: 0 auto; }
+
+  .day {
+    background: var(--warm-white);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: box-shadow 0.2s;
+  }
+
+  .day.open {
+    box-shadow: 0 4px 24px rgba(30,45,74,0.08);
+  }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .day-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .day-num .n { font-size: 18px; font-weight: 600; line-height: 1; }
+  .day-num .m { font-size: 10px; font-weight: 300; opacity: 0.75; margin-top: 1px; }
+
+  .day-info { flex: 1; min-width: 0; }
+  .day-title { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .day-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  .day-arrow {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--stone-pale);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.25s, background 0.2s;
+    font-size: 10px;
+    color: var(--stone);
+  }
+
+  .day.open .day-arrow { transform: rotate(180deg); background: var(--terracotta-pale); color: var(--terracotta); }
+
+  /* DAY BODY */
+  .day-body { display: none; border-top: 1px solid var(--border); }
+  .day.open .day-body { display: block; }
+
+  .stop {
+    display: flex;
+    gap: 0;
+    padding: 0 16px;
+    position: relative;
+  }
+
+  .stop-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40px;
+    flex-shrink: 0;
+    padding-top: 16px;
+  }
+
+  .stop-icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stop-line {
+    width: 1px;
+    flex: 1;
+    min-height: 12px;
+    background: var(--border);
+    margin-top: 4px;
+  }
+
+  .stop:last-child .stop-line { display: none; }
+
+  .stop-right {
+    flex: 1;
+    padding: 16px 0 16px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stop:last-child .stop-right { border-bottom: none; }
+
+  .stop-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 3px;
+  }
+
+  .stop-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 5px;
+    line-height: 1.35;
+  }
+
+  .stop-desc {
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .tag {
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .tag-green { background: var(--olive-pale); color: var(--olive); }
+  .tag-amber { background: var(--gold-pale); color: var(--gold); }
+  .tag-red { background: var(--terracotta-pale); color: var(--terracotta); }
+  .tag-blue { background: #DDE8F5; color: var(--navy-mid); }
+  .tag-stone { background: var(--stone-pale); color: var(--stone); }
+
+  /* DRIVE SEGMENT */
+  .drive-seg {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px 8px 66px;
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .drive-icon { font-size: 13px; }
+  .drive-text { font-size: 11px; color: var(--text-muted); flex: 1; }
+  .drive-dur {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--navy);
+    background: white;
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+  /* ACCOM */
+  .accom {
+    margin: 0 16px 16px;
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .accom-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .accom-label { font-size: 10px; font-weight: 500; color: rgba(250,247,242,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+  .accom-text { font-size: 12px; color: rgba(250,247,242,0.85); line-height: 1.55; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem 1rem 3rem;
+    font-size: 11px;
+    color: var(--stone-light);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .day {
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .day:nth-child(1) { animation-delay: 0.05s; }
+  .day:nth-child(2) { animation-delay: 0.1s; }
+  .day:nth-child(3) { animation-delay: 0.15s; }
+  .day:nth-child(4) { animation-delay: 0.2s; }
+  .day:nth-child(5) { animation-delay: 0.25s; }
+
+  /* COLOR VARIANTS per day */
+  .d1 .day-num { background: var(--olive-pale); color: var(--olive); }
+  .d2 .day-num { background: #DDE8F5; color: var(--navy-mid); }
+  .d3 .day-num { background: var(--gold-pale); color: var(--gold); }
+  .d4 .day-num { background: #EDE5F0; color: #6B3D8A; }
+  .d5 .day-num { background: var(--terracotta-pale); color: var(--terracotta); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Road Trip<br><em>Portugalia</em></h1>
+    <div class="hero-sub">26 – 30 iunie 2026</div>
+  </div>
+</div>
+
+<div style="max-width:640px;margin:0 auto">
+<div class="banner">
+  <div class="banner-title">Rezervări obligatorii în avans</div>
+  <div class="banner-items">
+    <div class="banner-item">Biblioteca Joanina · Coimbra</div>
+    <div class="banner-item">Winery · Porto</div>
+    <div class="banner-item">Livraria Lello · Porto</div>
+    <div class="banner-item">Quinta da Pacheca · Douro</div>
+    <div class="banner-item">Museu do Pão · Seia</div>
+    <div class="banner-item">Convento de Cristo · Tomar</div>
+    <div class="banner-item">Restaurant medieval · Tomar</div>
+    <div class="banner-item">Cazare Marvão</div>
+  </div>
+</div>
+</div>
+
+<div class="days">
+
+  <!-- ZIUA 1 -->
+  <div class="day d1" id="day1">
+    <div class="day-header" onclick="toggle('day1')">
+      <div class="day-num"><span class="n">26</span><span class="m">IUN</span></div>
+      <div class="day-info">
+        <div class="day-title">Lisabona → Coimbra → Porto</div>
+        <div class="day-meta">Joi &nbsp;·&nbsp; ~3h 15min condus</div>
+      </div>
+      <div class="day-arrow">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--olive-pale);color:var(--olive)">⬤</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">09:00</div>
+          <div class="stop-name">Plecare Lisabona</div>
+          <div class="stop-desc">A1 nord spre Coimbra. ~1h 50min autostradă.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--olive-pale);color:var(--olive)">🎓</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">10:50 – 17:00</div>
+          <div class="stop-name">Coimbra &nbsp;·&nbsp; ~6h</div>
+          <div class="stop-desc">Universidade de Coimbra — curtea principală + Biblioteca Joanina (rezervare online în avans, ~€12.50/adult). Sé Velha — catedrala romanică, 5 min distanță. Prânz relaxat pe Largo da Portagem. Jardim Botânico după-amiază — mare, umbrit, copiii aleargă liberi.</div>
+          <div class="tags">
+            <span class="tag tag-red">rezervare Joanina obligatorie</span>
+            <span class="tag tag-green">bun pt. copii</span>
+            <span class="tag tag-amber">prânz Baixa</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="drive-seg">
+        <div class="drive-icon">🚗</div>
+        <div class="drive-text">Coimbra → Porto · A1</div>
+        <div class="drive-dur">~1h 15min</div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--olive-pale);color:var(--olive)">🌆</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">18:15</div>
+          <div class="stop-name">Porto · check-in</div>
+          <div class="stop-desc">Check-in, refresh, cină ~20:00.</div>
+          <div class="tags"><span class="tag tag-stone">cazare Bonfim sau Cedofeita</span></div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--olive-pale);color:var(--olive)">🍽</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">20:00</div>
+          <div class="stop-name">Cină + plimbare Ribeira</div>
+          <div class="stop-desc">Francesinha obligatorie — Café Santiago sau Cufra. Plimbare Ribeira + Ponte Dom Luís iluminat după cină.</div>
+          <div class="tags"><span class="tag tag-amber">francesinha</span></div>
+        </div>
+      </div>
+
+      <div class="accom">
+        <div class="accom-icon">🏨</div>
+        <div>
+          <div class="accom-label">Cazare</div>
+          <div class="accom-text">Bonfim sau Cedofeita — mai liniștit decât Ribeira, prețuri mai bune, 15 min pe jos de tot. Două apartamente de 2 camere sunt mai practice decât camerele de hotel pentru 6 persoane.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZIUA 2 -->
+  <div class="day d2" id="day2">
+    <div class="day-header" onclick="toggle('day2')">
+      <div class="day-num"><span class="n">27</span><span class="m">IUN</span></div>
+      <div class="day-info">
+        <div class="day-title">Porto — zi întreagă</div>
+        <div class="day-meta">Vineri &nbsp;·&nbsp; fără condus · totul pe jos</div>
+      </div>
+      <div class="day-arrow">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:#DDE8F5;color:var(--navy-mid)">🌉</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">09:30 – 12:30</div>
+          <div class="stop-name">Ponte Dom Luís + Vila Nova de Gaia</div>
+          <div class="stop-desc">Traversat podul pe jos — nivel inferior, gratis. Vila Nova de Gaia: vizită + degustare la Sandeman sau Graham's. Tur kids-friendly (~45-60 min), suc de struguri pentru copii. ~€15-20/adult.</div>
+          <div class="tags">
+            <span class="tag tag-blue">rezervare winery în avans</span>
+            <span class="tag tag-green">bun pt. copii</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:#DDE8F5;color:var(--navy-mid)">🍽</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">13:00 – 14:30</div>
+          <div class="stop-name">Prânz Ribeira</div>
+          <div class="stop-desc">Bacalhau à Brás sau bitoque. Evitați terasele cu meniu în engleză pe primele rânduri față de apă.</div>
+          <div class="tags"><span class="tag tag-amber">restaurant local</span></div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:#DDE8F5;color:var(--navy-mid)">📚</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">14:30 – 17:30</div>
+          <div class="stop-name">Livraria Lello + Torre dos Clérigos + Fontainhas</div>
+          <div class="stop-desc">Lello: rezervare online obligatorie (~€8, deductibil din cumpărături). Torre dos Clérigos: 225 trepte, panoramă completă (~€8/adult, sub 8 ani gratuit). Bairro das Fontainhas: 20 min plimbare cu azulejos, gratis.</div>
+          <div class="tags">
+            <span class="tag tag-blue">rezervare Lello obligatorie</span>
+            <span class="tag tag-green">bun pt. copii</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:#DDE8F5;color:var(--navy-mid)">🍷</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">19:00</div>
+          <div class="stop-name">Cină Porto</div>
+          <div class="stop-desc">Taberna dos Mercadores (Ribeira, bun pentru grupuri) sau DOP dacă vreți ceva mai sus de gamă.</div>
+          <div class="tags"><span class="tag tag-amber">rezervare pentru 6</span></div>
+        </div>
+      </div>
+
+      <div class="accom">
+        <div class="accom-icon">🏨</div>
+        <div>
+          <div class="accom-label">Cazare</div>
+          <div class="accom-text">Aceeași cazare ca ziua 1 — Bonfim sau Cedofeita. Parcați dimineața și uitați de mașini toată ziua.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZIUA 3 -->
+  <div class="day d3" id="day3">
+    <div class="day-header" onclick="toggle('day3')">
+      <div class="day-num"><span class="n">28</span><span class="m">IUN</span></div>
+      <div class="day-info">
+        <div class="day-title">Porto → Vale do Douro → Serra da Estrela</div>
+        <div class="day-meta">Sâmbătă &nbsp;·&nbsp; ~4h condus total</div>
+      </div>
+      <div class="day-arrow">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--gold-pale);color:var(--gold)">🚗</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">09:00</div>
+          <div class="stop-name">Plecare Porto → mal nord N108</div>
+          <div class="stop-desc">A4 est spre Douro. De la intrarea pe N108 începe peisajul — vii în terase, râu jos în vale.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--gold-pale);color:var(--gold)">🏔</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">11:15 – 11:45</div>
+          <div class="stop-name">Miradouro de Casal de Loivos &nbsp;·&nbsp; 30 min</div>
+          <div class="stop-desc">Cel mai spectaculos punct de belvedere din Douro. Vedere 180° asupra cotului râului și teraselor de viță. Parcare ușoară pentru 2 mașini. Gratis.</div>
+          <div class="tags"><span class="tag tag-green">gratis &nbsp;·&nbsp; bun pt. copii</span></div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--gold-pale);color:var(--gold)">🚂</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">12:00 – 12:20</div>
+          <div class="stop-name">Pinhão &nbsp;·&nbsp; 15 min</div>
+          <div class="stop-desc">Stația de tren cu panouri de azulejos albastre — fotografiat, espresso pe terasă cu vedere la râu, plecat.</div>
+          <div class="tags"><span class="tag tag-green">gratis</span></div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--gold-pale);color:var(--gold)">👁</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">12:30 – 12:50</div>
+          <div class="stop-name">Miradouro São Leonardo de Galafura &nbsp;·&nbsp; 20 min</div>
+          <div class="stop-desc">Vedere vestică largă asupra Douro-ului, mai puțin aglomerat. La ora aceasta e liniștit.</div>
+          <div class="tags"><span class="tag tag-green">gratis</span></div>
+        </div>
+      </div>
+
+      <div class="drive-seg">
+        <div class="drive-icon">🚗</div>
+        <div class="drive-text">Galafura → Régua · traversat la mal sud</div>
+        <div class="drive-dur">~25 min</div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--gold-pale);color:var(--gold)">🍷</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">13:15 – 15:00</div>
+          <div class="stop-name">Quinta da Pacheca &nbsp;·&nbsp; prânz</div>
+          <div class="stop-desc">Restaurant D'Pacheca, terasă cu vedere directă la Douro și viile în terase. Prânz casual, vin al casei. Fără tur obligatoriu. Rezervare pentru 6 persoane obligatorie — quintadapacheca.com.</div>
+          <div class="tags">
+            <span class="tag tag-red">rezervare obligatorie</span>
+            <span class="tag tag-amber">mal sud · lângă Régua</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="drive-seg">
+        <div class="drive-icon">🚗</div>
+        <div class="drive-text">Régua → Seia &nbsp;·&nbsp; N226 → N17 &nbsp;·&nbsp; drum de munte ultimii 40km</div>
+        <div class="drive-dur">~2h</div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--gold-pale);color:var(--gold)">🏔</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">17:30</div>
+          <div class="stop-name">Seia · check-in + cină</div>
+          <div class="stop-desc">Queijo da Serra + borrego assado. Temperatura va fi cu ~10°C mai mică față de Douro — geci pentru copii.</div>
+          <div class="tags"><span class="tag tag-amber">queijo da Serra obligatoriu</span></div>
+        </div>
+      </div>
+
+      <div class="accom">
+        <div class="accom-icon">🏨</div>
+        <div>
+          <div class="accom-label">Cazare</div>
+          <div class="accom-text">Hotel Camelo (Seia, practic pentru grupuri) sau Manteigas (20 min mai departe, mai pitoresc, în inima muntelui).</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZIUA 4 -->
+  <div class="day d4" id="day4">
+    <div class="day-header" onclick="toggle('day4')">
+      <div class="day-num"><span class="n">29</span><span class="m">IUN</span></div>
+      <div class="day-info">
+        <div class="day-title">Serra da Estrela → Marvão</div>
+        <div class="day-meta">Duminică &nbsp;·&nbsp; ~2h 15min condus</div>
+      </div>
+      <div class="day-arrow">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:#EDE5F0;color:#6B3D8A">⛰</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">09:00 – 09:45</div>
+          <div class="stop-name">Torre &nbsp;·&nbsp; 1993m</div>
+          <div class="stop-desc">Cel mai înalt punct din Portugalia continentală. Drum asfaltat până sus — parchezi direct. Vedere de 360°, pe timp senin vezi până în Spania. ~10-12°C dimineața, geci obligatorii. Copiii: "am urcat cel mai înalt munte din Portugalia fără să facem nimic" 😄</div>
+          <div class="tags"><span class="tag tag-green">gratis &nbsp;·&nbsp; bun pt. copii</span></div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:#EDE5F0;color:#6B3D8A">💧</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">10:30 – 11:15</div>
+          <div class="stop-name">Covão dos Conchos &nbsp;·&nbsp; 45 min</div>
+          <div class="stop-desc">Lac circular săpat în stâncă pentru hidroenergie — arată ca un portal SF în mijlocul naturii. 15 min mers pe jos dus-întors pe potecă ușoară. Copiii de 7-9 ani fac față perfect.</div>
+          <div class="tags"><span class="tag tag-green">gratis &nbsp;·&nbsp; bun pt. copii</span></div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:#EDE5F0;color:#6B3D8A">🌊</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">11:30 – 11:50</div>
+          <div class="stop-name">Lagoa Comprida &nbsp;·&nbsp; 20 min</div>
+          <div class="stop-desc">Cel mai mare lac glaciar din Serra da Estrela. Vedere spectaculoasă de pe marginea drumului. Oprire, fotografiat, plecat.</div>
+          <div class="tags"><span class="tag tag-green">gratis</span></div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:#EDE5F0;color:#6B3D8A">🍞</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">12:00 – 13:30</div>
+          <div class="stop-name">Museu do Pão · Seia &nbsp;·&nbsp; prânz</div>
+          <div class="stop-desc">Restaurant Pão de Forma — pâini artizanale, produse locale, specific português. Muzeul e interesant și pentru copii (mori, instrumente vechi). Rezervare obligatorie — duminică la prânz, 6 persoane.</div>
+          <div class="tags">
+            <span class="tag tag-red">rezervare obligatorie</span>
+            <span class="tag tag-green">bun pt. copii</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="drive-seg">
+        <div class="drive-icon">🚗</div>
+        <div class="drive-text">Seia → Marvão &nbsp;·&nbsp; N17 → A23 &nbsp;·&nbsp; autostradă relaxată</div>
+        <div class="drive-dur">~2h 15min</div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:#EDE5F0;color:#6B3D8A">🏰</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">15:45 – 17:15</div>
+          <div class="stop-name">Castelul Marvão &nbsp;·&nbsp; 1h30</div>
+          <div class="stop-desc">Sat medieval la 862m altitudine. Castel templier intact din sec. XIII. ~€3/adult, gratuit sub 12 ani. Urcat pe turnuri, vedere spre Spania. Povestiți cavalerii templieri copiilor în mașină pe drum — îi face să intre cu altă energie în castel.</div>
+          <div class="tags">
+            <span class="tag tag-green">bun pt. copii</span>
+            <span class="tag tag-blue">bilete online în avans</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:#EDE5F0;color:#6B3D8A">🌅</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">19:30 – 21:00+</div>
+          <div class="stop-name">Cină + apus Marvão</div>
+          <div class="stop-desc">Varanda do Alentejo sau Restaurante Castelejo — miel, porc preto, vinho Alentejano. Apus ~21:00. Ieșiți pe ziduri după cină — e cel mai bun moment din toată ziua.</div>
+          <div class="tags"><span class="tag tag-amber">apus ~21:00 · nu ratați</span></div>
+        </div>
+      </div>
+
+      <div class="accom">
+        <div class="accom-icon">🏨</div>
+        <div>
+          <div class="accom-label">Cazare</div>
+          <div class="accom-text">Pousada de Marvão (în fosta mănăstire, premium) sau Casa da Villa și alte guesthouses chiar în sat. Rezervați cât mai curând — e mic și se umple rapid vara.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZIUA 5 -->
+  <div class="day d5" id="day5">
+    <div class="day-header" onclick="toggle('day5')">
+      <div class="day-num"><span class="n">30</span><span class="m">IUN</span></div>
+      <div class="day-info">
+        <div class="day-title">Marvão → Tomar → Jemprestes → Lisabona</div>
+        <div class="day-meta">Luni &nbsp;·&nbsp; ~3h 30min condus total</div>
+      </div>
+      <div class="day-arrow">▼</div>
+    </div>
+    <div class="day-body">
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--terracotta-pale);color:var(--terracotta)">🚗</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">09:30</div>
+          <div class="stop-name">Plecare relaxată Marvão</div>
+          <div class="stop-desc">A23 nord. ~1h 30min până la Tomar.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--terracotta-pale);color:var(--terracotta)">⛪</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">11:00 – 13:15</div>
+          <div class="stop-name">Convento de Cristo &nbsp;·&nbsp; 2h</div>
+          <div class="stop-desc">UNESCO. Fostă reședință a Cavalerilor Templieri, ulterior Ordinul lui Hristos. Arhitectură Manueline spectaculoasă, clădire circulară templieră — unicat în lume. ~€6/adult, gratuit sub 12 ani. Cumpărați bilete online în avans, weekendurile de vară sunt aglomerate.</div>
+          <div class="tags">
+            <span class="tag tag-red">bilete online obligatorii</span>
+            <span class="tag tag-green">bun pt. copii</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--terracotta-pale);color:var(--terracotta)">🍖</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">13:15 – 14:30</div>
+          <div class="stop-name">Prânz medieval · Tomar</div>
+          <div class="stop-desc">Taverna Antiqua (lângă Convento, decor medieval, meniu inspirat din bucătăria templieră) sau Restaurante Tabuleiro în centru. Rezervare în avans pentru 6 persoane.</div>
+          <div class="tags"><span class="tag tag-red">rezervare obligatorie</span></div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--terracotta-pale);color:var(--terracotta)">🏘</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">14:30 – 15:15</div>
+          <div class="stop-name">Centrul vechi Tomar &nbsp;·&nbsp; 45 min</div>
+          <div class="stop-desc">Praça da República, plimbare liberă prin centrul medieval bine conservat.</div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--terracotta-pale);color:var(--terracotta)">📍</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">15:15 – 15:35</div>
+          <div class="stop-name">Jemprestes &nbsp;·&nbsp; 20 min</div>
+          <div class="stop-desc">Oprire scurtă pe traseu. Pe drum spre autostradă, fără detour semnificativ.</div>
+        </div>
+      </div>
+
+      <div class="drive-seg">
+        <div class="drive-icon">🚗</div>
+        <div class="drive-text">Tomar → Lisabona &nbsp;·&nbsp; A23 → A1</div>
+        <div class="drive-dur">~1h 25min</div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-left">
+          <div class="stop-icon" style="background:var(--terracotta-pale);color:var(--terracotta)">🏠</div>
+          <div class="stop-line"></div>
+        </div>
+        <div class="stop-right">
+          <div class="stop-time">~17:00</div>
+          <div class="stop-name">Sosire Lisabona</div>
+          <div class="stop-desc">Drum bun! 🇵🇹</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Road Trip Portugalia · Iunie 2026 &nbsp;·&nbsp; drum bun tuturor 🇵🇹
+</footer>
+
+<script>
+function toggle(id) {
+  const day = document.getElementById(id);
+  const isOpen = day.classList.contains('open');
+  document.querySelectorAll('.day.open').forEach(d => d.classList.remove('open'));
+  if (!isOpen) day.classList.add('open');
+}
+document.getElementById('day1').classList.add('open');
+</script>
+</body>
+</html>
